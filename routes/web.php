@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WebController@index');
 Route::get('/contact-us', 'WebController@contactUs');
+Route::post('/read_notification', 'WebController@readNotification');
 Route::post('/products/check-product', 'ProductController@checkProduct');
-
+Route::get('/products/{id}/shared-url', 'ProductController@sharedUrl');
 Route::resource('products', 'ProductController');
+
+Route::resource('admin/orders', 'Admin\OrderController');
+Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
+Route::post('admin/tools/update-product-price', 'Admin\ToolController@updateProductPrice');
+Route::post('admin/tools/create-product-redis', 'Admin\ToolController@createProductRedis');
+
 Route::post('signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
 Route::group(['middleware' => 'auth:api'], function () {

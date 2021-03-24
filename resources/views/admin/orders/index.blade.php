@@ -1,4 +1,5 @@
 <h2>後臺訂單-列表<h2>
+<span>訂單總數:{{$orderCount}}</span>
 <table>
     <thead>
         <tr>
@@ -19,9 +20,14 @@
                         {{$orderItem->product->title}} &nbsp;
                     @endforeach
                 </td>
-                <td>訂單總額</td>
-                <td>是否運送</td>
+                <td>{{isset($order->orderItems) ? $order->orderItems->sum('price') : 0}}</td>
+                <td>{{$order->is_shipped}}</td>
             </tr>
         @endforeach
     </tbody>
 </table>
+<div>
+    @for($i = 1; $i <= $orderPages; $i++)
+        <a href="/admin/orders?page={{ $i }}">第{{ $i }}頁</a> &nbsp;
+    @endfor
+</div>

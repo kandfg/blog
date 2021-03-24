@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ShortUrlService;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -15,13 +17,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // $data = DB::table('sbl_team_data')
-        //                 ->select('*')
-        //                 ->join('sbl_teams', function ($join) {
-        //                     $join->on('sbl_teams.id', '=', 'sbl_team_data.team_id')
-        //                     ->where('sbl_teams.total_win', '>', '200');
-        //                 })->get();
-        $data = Product::get();
+        // $data = DB::table('products')->get();
+        //$data = Product::get();
+        $data = json_decode(Redis::get('products'));
 
         return response($data);
     }
@@ -35,6 +33,14 @@ class ProductController extends Controller
         } else {
             return response(false);
         }
+    }
+
+    public function sharedUrl($id)
+    {
+        $service = new ShortUrlService();
+        $url = $service->makeShortUrl("http://localhost:8000/products/$id");
+
+        return response(['url' => $url]);
     }
 
     /**
