@@ -1,29 +1,40 @@
-@extends('layouts.app')
+@extends('layouts.admin_app')
 @section('content')
-<h2>後臺訂單-列表<h2>
-<span>訂單總數:{{$productCount}}</span>
+<h2>商品列表<h2>
+<span>商品總數:{{$productCount}}</span>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <table>
     <thead>
         <tr>
-            <td>購買時間</td>
-            <td>購買者</td>
-            <td>購買清單</td>
-            <td>訂單總額</td>
-            <td>是否運送</td>
+            <td>編號</td>
+            <td>標題</td>
+            <td>價錢</td>
+            <td>數量</td>
+            <td>內容</td>
+            <td>圖片</td>
+            <td>功能</td>
         </tr>
     </thead>
     <tbody>
         @foreach ($products as $product)
             <tr>
-                <td>{{$product->created_at}}</td>
-                <td>{{$product->user->name}}</td>
+                <td>{{$product->id}}</td>
+                <td>{{$product->title}}</td>
+                <td>{{$product->price}}</td>
+                <td>{{$product->quantity}}</td>
+                <td>{{$product->content}}</td>
+                <td><a href="{{$product->image_url}}">圖片連結</a></td>
                 <td>
-                    @foreach ($product->productItems as $productItem)
-                        {{$productItem->product->title}} &nbsp;
-                    @endforeach
+                    <input type="button" class="upload_image" data-id={{$product->id}} value="上傳圖片">
                 </td>
-                <td>{{isset($product->productItems) ? $product->productItems->sum('price') : 0}}</td>
-                <td>{{$product->is_shipped}}</td>
             </tr>
         @endforeach
     </tbody>
@@ -33,4 +44,10 @@
         <a href="/admin/products?page={{ $i }}">第{{ $i }}頁</a> &nbsp;
     @endfor
 </div>
+<script>
+    $('.upload_image').click(function(){
+        $('#product_id').val($(this).data('id'))
+        $('#upload_image').modal()
+    })
+</script>
 @endsection
