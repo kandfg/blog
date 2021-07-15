@@ -27,7 +27,7 @@ jobs:
       - run: sudo apt-get install libfreetype6-dev
       - run: sudo apt-get install libpng-dev
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
-
+      - run: sudo docker-php-ext-install -j$(nproc) gd 
       # Download and cache dependencies
       - restore_cache:
           keys:
