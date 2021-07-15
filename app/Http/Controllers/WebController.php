@@ -29,6 +29,11 @@ class WebController extends Controller
         return view('web.contact_us', ['notifications' => $this->notifications]);
     }
 
+    public function login()
+    {
+        return view('web.login', ['notifications' => $this->notifications]);
+    }
+
     public function readNotification(Request $request)
     {
         $id = $request->all()['id'];

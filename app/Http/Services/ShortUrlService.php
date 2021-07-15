@@ -3,11 +3,10 @@
 namespace App\Http\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
-class ShortUrlService
+class ShortUrlService implements ShortUrlInterfaceService
 {
-    protected $client;
-
     public function __construct()
     {
         $this->client = new Client();
@@ -19,6 +18,7 @@ class ShortUrlService
         $data = [
             'url' => $url,
         ];
+        Log::info('postData', ['data' => $data]);
         $response = $this->client->request(
             'POST',
             "https://api.pics.ee/v1/links/?access_token=$accesstoken",
@@ -28,6 +28,7 @@ class ShortUrlService
             ]
         );
         $contents = $response->getBody()->getContents();
+        Log::channel('short_url')->info('responseData', ['data' => $contents]);
         $contents = json_decode($contents);
 
         return $contents->data->picseeUrl;

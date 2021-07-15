@@ -35,6 +35,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $exception) {
+            //dd($exception);
             $user = auth()->user();
             LogError::create([
                 'user_Id' => $user ? $user->id : 0,

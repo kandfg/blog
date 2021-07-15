@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WebController@index');
 Route::get('/contact-us', 'WebController@contactUs');
+Route::get('/login', 'WebController@login');
 Route::post('/read_notification', 'WebController@readNotification');
 Route::post('/products/check-product', 'ProductController@checkProduct');
 Route::get('/products/{id}/shared-url', 'ProductController@sharedUrl');
@@ -24,10 +25,12 @@ Route::resource('admin/orders', 'Admin\OrderController');
 Route::resource('admin/products', 'Admin\ProductController');
 Route::post('admin/products/upload-image', 'Admin\ProductController@uploadImage');
 Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
+Route::get('admin/orders/excel/export', 'Admin\OrderController@export');
+Route::post('/admin/products/excel/import', 'Admin\ProductController@import');
 Route::post('admin/tools/update-product-price', 'Admin\ToolController@updateProductPrice');
 Route::post('admin/tools/create-product-redis', 'Admin\ToolController@createProductRedis');
 
-Route::post('signup', 'AuthController@signup');
+Route::post('/signup', 'AuthController@signup');
 Route::post('login', 'AuthController@login');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', 'AuthController@user');

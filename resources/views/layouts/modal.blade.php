@@ -28,6 +28,7 @@
     $('.read_notification').on('click',function(){
       var $this=$(this)
       $.ajax({
+        headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
         method:'POST',
         url:'read_notification',
         data:{id:$this.data('id')}

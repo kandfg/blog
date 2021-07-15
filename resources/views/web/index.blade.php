@@ -17,11 +17,12 @@
     <tbody>
         @foreach($products as $product)
         <tr>
-            @if ($product->id==1)
+            {{-- @if ($product->id==1)
                 <td class="special-text">{{$product->title}}</td>
             @else
                 <td>{{$product->title}}</td>
-            @endif
+            @endif --}}
+            <td>{{$product->title}}</td>
             <td>{{$product->content}}</td>
             <td style="{{$product->price<200 ? 'color:red;font-size:22px':''}}">{{$product->price}}</td>
             <td>
@@ -35,6 +36,7 @@
 <script>
 $('.check_product').on('click',function(){
     $.ajax({
+        headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
         method:'POST',
         url:'/products/check-product',
         data:{id: $(this).data('id')}
