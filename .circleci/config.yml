@@ -23,6 +23,7 @@ jobs:
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      
       - run: sudo apt-get install libjpeg62-turbo-dev
       - run: sudo apt-get install libfreetype6-dev
       - run: sudo apt-get install libpng-dev
@@ -53,7 +54,7 @@ jobs:
 
       # prepare the database
       - run: touch storage/testing.mysql
-      - run: php artisan migrate --env=testing
+      - run: php artisan migrate --force
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
