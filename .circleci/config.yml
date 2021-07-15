@@ -35,6 +35,9 @@ jobs:
       - run: sudo apt-get install libpng-dev
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
       - run: sudo docker-php-ext-install -j$(nproc) gd
+
+      - run: sudo apt install -y libsqlite3-dev zlib1g-dev
+      - run: sudo apt install -y mariadb-client
       - run: sudo docker-php-ext-install pdo_mysql bcmath pcntl mbstring 
 
       
