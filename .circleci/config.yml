@@ -51,11 +51,16 @@ jobs:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      
-      # prepare the database
       - run:
-        name: Migrate Database
-        command: php artisan migrate --force
+          name: Setup Environment
+          command: |
+            cp .env.testing .env
+            php artisan key:generate
+            php artisan passport:keys
+            touch ./storage/logs/laravel.log
+      # prepare the database
+      - run: touch storage/testing.mysql
+      - run: php artisan migrate --force
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
