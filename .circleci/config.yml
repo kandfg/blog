@@ -15,12 +15,12 @@ jobs:
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
       - image: circleci/mysql:8.0.22
-        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-use-native-aio=0 --server-id=1 --log_bin=ON
-        environment:
-            MYSQL_HOST: 127.0.0.1
-            MYSQL_DB: circleci
-            MYSQL_USER: root
-            MYSQL_ROOT_PASSWORD: root
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: testing
+      - APP_KEY: APP_KEYを入れてください
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
       #
       # - image: redis:2.8.19
 
