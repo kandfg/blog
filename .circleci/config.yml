@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
-      - image: circleci/mysql:8.0.22
+      - image: circleci/mysql:5.7
     
       #
       # - image: redis:2.8.19
@@ -63,4 +63,4 @@ jobs:
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
-      - run: ./vender/bin/phpunit
+      - run: ./vendor/bin/phpunit
