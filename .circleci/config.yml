@@ -8,14 +8,6 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4.12-node-browsers
-        environment:
-          APP_ENV: testing
-          DB_CONNECTION: mysql
-          DB_DATABASE: circle_test
-          DB_USERNAME: root
-          DB_PASSWORD: ubuntu
-          SESSION_DRIVER: database
-          CACHE_DRIVER: file
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,11 +16,10 @@ jobs:
       # for database intensive operations.
       - image: circleci/mysql:8.0.22-ram
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD=true
-          - MYSQL_ROOT_PASSWORD=ubuntu
-          - MYSQL_USER=ubuntu
-          - MYSQL_PASSWORD=ubuntu
-          - MYSQL_DATABASE=circle_test
+            MYSQL_HOST: 127.0.0.1
+            MYSQL_DB: circleci
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: root
       #
       # - image: redis:2.8.19
 
