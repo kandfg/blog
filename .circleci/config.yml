@@ -30,10 +30,7 @@ jobs:
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
       - run: sudo docker-php-ext-install -j$(nproc) gd 
 
-      - run:
-          name: "Create Environment file"
-          command: |
-            mv .env.testing .env
+      
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -58,7 +55,8 @@ jobs:
             - node_modules
       
       # prepare the database
-      - run: php artisan migrate --force
+      -run: touch database/database.sqlite
+	    -run: php artisan migrate --env=blog_demo
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
