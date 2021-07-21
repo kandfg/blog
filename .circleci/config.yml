@@ -16,8 +16,10 @@ jobs:
       # for database intensive operations.
       - image: circleci/mysql:8.0
         environment:
-            MYSQL_USER: root
-            MYSQL_DATABASE: blog
+          MYSQL_DATABASE: blog
+          MYSQL_ROOT_USER: root
+          MYSQL_ROOT_PASSWORD: 
+          MYSQL_ROOT_HOST: localhost
     
       #
       # - image: redis:2.8.19
