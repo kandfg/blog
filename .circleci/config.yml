@@ -19,7 +19,7 @@ jobs:
           MYSQL_DATABASE: blog
           MYSQL_ROOT_USER: root
           MYSQL_ROOT_PASSWORD: 
-          MYSQL_ROOT_HOST: localhost
+          MYSQL_ROOT_HOST: 127.0.0.1
     
       #
       # - image: redis:2.8.19
@@ -66,7 +66,7 @@ jobs:
 
       - run:
           name: Mysql database
-          command: mysql -h localhost -u root -e "create database blog;"
+          command: mysql -h 127.0.0.1 -u root -e "create database blog;"
       # prepare the database
       - run: php artisan key:generate
       - run: php artisan migrate --forces
