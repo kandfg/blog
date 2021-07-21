@@ -59,6 +59,6 @@ jobs:
       # prepare the database
       - run: php artisan key:generate
       - run: touch database/database.sqlite
-      - run: php artisan migrate --env=testing
+      - run: php artisan migrate
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
