@@ -8,7 +8,7 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4.12-node-browsers
-      environment:
+        environment:
             MYSQL_HOST: 127.0.0.1
             MYSQL_DB: blog
             MYSQL_USER: root
@@ -21,7 +21,7 @@ jobs:
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
       - image: circleci/mysql:8.0
-      environment:
+        environment:
             MYSQL_USER: root
             MYSQL_ALLOW_EMPTY_PASSWORD: true
     
