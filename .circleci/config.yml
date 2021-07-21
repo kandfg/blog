@@ -65,9 +65,9 @@ jobs:
           paths:
             - node_modules
 
-      - run:
-          name: Mysql database
-          command: mysql -h 127.0.0.1 -u kandfg -p 123456 -e "create database blog;"
+      # - run:
+      #     name: Mysql database
+      #     command: mysql -h 127.0.0.1 -u kandfg -p 123456 -e "create database blog;"
       # prepare the database
       - run: php artisan key:generate
       - run: php artisan migrate --forces
