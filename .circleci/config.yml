@@ -8,6 +8,12 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4.12-node-browsers
+      environment:
+            MYSQL_HOST: 127.0.0.1
+            MYSQL_DB: blog
+            MYSQL_USER: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: true
+            MYSQL_PASSWORD:
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -15,6 +21,9 @@ jobs:
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
       - image: circleci/mysql:8.0
+      environment:
+            MYSQL_USER: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: true
     
       #
       # - image: redis:2.8.19
@@ -30,8 +39,9 @@ jobs:
       - run: sudo apt-get install libpng-dev
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
       - run: sudo docker-php-ext-install -j$(nproc) gd
-      
+      - run: sudo apt install -y mysql-client
       - run: sudo docker-php-ext-install pdo_mysql
+      - run: sudo composer self-update
 
       
       # Download and cache dependencies
@@ -42,6 +52,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: composer install -n --prefer-dist
+      - run: mv .env.testing .env
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
@@ -56,9 +67,12 @@ jobs:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      
-      # prepare the database
 
+      - run:
+          name: Mysql database
+          command: mysql -h 127.0.0.1 -u root -e "create database blog;"
+      # prepare the database
+      - run: php artisan key:generate
       - run: php artisan migrate --forces
 
       # run tests with phpunit or codecept
