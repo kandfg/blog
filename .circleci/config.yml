@@ -66,7 +66,7 @@ jobs:
 
       - run:
           name: Mysql database
-          command: mysql -h 127.0.0.1 -u root -e "create database blog;"
+          command: mysql -h localhost -u root -e "create database blog;"
       # prepare the database
       - run: php artisan key:generate
       - run: php artisan migrate --forces
