@@ -14,13 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
-      - image: circleci/mysql:5.7
-        command: mysqld --default-authentication-plugin=mysql_native_password
-        environment:
-          MYSQL_USER: kandfg
-          MYSQL_DATABASE: blog
-          MYSQL_ROOT_PASSWORD: ''
-          MYSQL_PASSWORD: '123456'
+      #- image: circleci/mysql:8.0
     
       #
       # - image: redis:2.8.19
@@ -36,8 +30,6 @@ jobs:
       - run: sudo apt-get install libpng-dev
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
       - run: sudo docker-php-ext-install -j$(nproc) gd
-      - run: sudo apt install -y default-mysql-client
-      - run: sudo docker-php-ext-install pdo_mysql
       - run: sudo composer self-update
 
       
@@ -65,12 +57,10 @@ jobs:
           paths:
             - node_modules
 
-      # - run:
-      #     name: Mysql database
-      #     command: mysql -h 127.0.0.1 -u kandfg -p 123456 -e "create database blog;"
       # prepare the database
       - run: php artisan key:generate
-      - run: php artisan migrate --forces
-
+      command: |
+	        touch database/database.sqlite
+	        php artisan migrate --env=testing
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
